@@ -1,1 +1,5 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - include:
+      file: 1_update_book_availability/0000changelog.yaml
+      relativeToChangelogFile: true
+      labels: trigger

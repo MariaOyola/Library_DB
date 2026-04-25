@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3d8a1f7c-9b66-4c4e-b7a2-6e1f3c9d2a10
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,view,loan_history"
+      comment: Creates view for loan history with  JOIN across loan, user_account, book and category.
+      changes:
+        - sqlFile:
+            path: 001_create_view_loan_history.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../../05_rollbacks/01_ddl/04_views/2_loan_history/001_create_view_loan_history.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false

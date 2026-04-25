@@ -1,1 +1,10 @@
-databaseChangeLog: []
+databaseChangeLog: 
+  - include:
+      file:  1_available_books/0000changelog.yaml
+      relativeToChangelogFile: true
+      labels: available_books
+
+  - include:
+      file: 2_loan_history/0000changelog.yaml
+      relativeToChangelogFile: true
+      labels: loan_history

@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: d4e8a9b1-2c77-4f66-a9c2-5b3d8e1f7a33
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,user_account"
+      comment: Creates the baseline tables for the user_account schema.
+      changes:
+        - sqlFile:
+            path: 001_create_user_account_tables.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/3_user_account/001_create_user_account_tables.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false

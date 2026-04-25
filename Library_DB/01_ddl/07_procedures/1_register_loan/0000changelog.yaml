@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: e2d1c3b4-0007-4e5f-a678-proc00001abc
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,procedure,loan"
+      comment: Creates stored procedure to register a loan with availability validation.
+      changes:
+        - sqlFile:
+            path: 001_create_procedure_register_loan.sql
+            relativeToChangelogFile: true
+            stripComments: false
+            splitStatements: false
+      rollback:
+        - sqlFile:
+            path: ../../../../../05_rollbacks/01_ddl/07_procedures/1_register_loan/001_create_procedure_register_loan.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false
+            splitStatements: false

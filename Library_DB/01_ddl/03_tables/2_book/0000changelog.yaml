@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8f1a7c2e-3d91-4f5b-9a77-1c2b6d8e4a01
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,book"
+      comment: Creates the baseline tables for the book schema.
+      changes:
+        - sqlFile:
+            path: 001_create_book_tables.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/2_book/001_create_book_tables.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false

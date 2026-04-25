@@ -1,21 +1,21 @@
-name: geography
+name: library_management
 
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: geography-postgres
+    container_name: library-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-airline_ops}
-      POSTGRES_USER: ${POSTGRES_USER:-geography_user}
-      POSTGRES_PASSWORD: geography_password
+      POSTGRES_USER: ${POSTGRES_USER:-library_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-library_pass}
     ports:
-      - "${POSTGRES_PORT:-5436}:5432"
+      - "5436:5432"
     volumes:
-      - geography_data:/var/lib/postgresql/data
+      - library_data:/var/lib/postgresql/data
     healthcheck:
       test:
         - CMD-SHELL
-        - pg_isready -U ${POSTGRES_USER:-geography_user} -d ${POSTGRES_DB:-airline_ops}
+        - pg_isready -U ${POSTGRES_USER:-library_user} -d ${POSTGRES_DB:-airline_ops}
       interval: 5s
       timeout: 5s
       retries: 10
@@ -24,7 +24,7 @@ services:
     build:
       context: .
       dockerfile: docker/liquibase/Dockerfile
-    image: geography-liquibase:5.0.2
+    image: library-liquibase:5.0.2
     profiles:
       - tooling
     depends_on:
@@ -39,8 +39,8 @@ services:
       - --changeLogFile=changelog-master.yaml
       - --classpath=/liquibase/liquibase_libs/postgresql-42.7.8.jar
       - --url=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-airline_ops}
-      - --username=${POSTGRES_USER:-geography_user}
-      - --password=${POSTGRES_PASSWORD:-geography_password}
+      - --username=${POSTGRES_USER:-library_user}
+      - --password=${POSTGRES_PASSWORD:-library_pass}
 
 volumes:
-  geography_data:
+  library_data:

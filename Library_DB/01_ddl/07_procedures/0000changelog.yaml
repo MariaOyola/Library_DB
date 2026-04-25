@@ -1,1 +1,5 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - include:
+      file: 1_register_loan/0000changelog.yaml
+      relativeToChangelogFile: true
+      labels: procedure

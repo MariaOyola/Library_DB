@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: c1d7e8f2-9a11-4b88-8e22-6f9a3c1d7b55
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,loan"
+      comment: Creates the baseline tables for the loan schema.
+      changes:
+        - sqlFile:
+            path: 001_create_loan_tables.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/4_loan/001_create_loan_tables.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false

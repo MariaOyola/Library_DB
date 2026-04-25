@@ -1,55 +1,23 @@
 databaseChangeLog:
   - include:
-      file: geography/0000changelog.yaml
+      file: 1_category/0000changelog.yaml
       relativeToChangelogFile: true
-      labels: geography
+      labels: category
 
   - include:
-      file: airline/0000changelog.yaml
+      file: 2_book/0000changelog.yaml
       relativeToChangelogFile: true
-      labels: airline
+      labels: book 
 
   - include:
-      file: identity/0000changelog.yaml
+      file: 3_user_account/0000changelog.yaml
       relativeToChangelogFile: true
-      labels: identity
+      labels: user_account 
 
   - include:
-      file: security/0000changelog.yaml
+      file: 4_loan/0000changelog.yaml
       relativeToChangelogFile: true
-      labels: security
+      labels: loan
 
-  - include:
-      file: loyalty/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: loyalty
-  
-  - include:
-      file: airport/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: airport
 
-  - include:
-      file: flight_operations/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: flight_operations
 
-  - include:
-      file: sales_reservation/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: sales_reservation
-
-  - include:
-      file: boarding/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: boarding
-
-  - include:
-      file: payment/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: payment
-
-  - include:
-      file: billing/0000changelog.yaml
-      relativeToChangelogFile: true
-      labels: billing

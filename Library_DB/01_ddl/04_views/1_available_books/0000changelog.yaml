@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6c2b7e1f-4d55-4b99-a8c3-2f1a7d9e5b99
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,view, available_books"
+      comment: Creates view for available books joined with category.
+      changes:
+        - sqlFile:
+            path: 001_create_view_available_books.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/04_views/1_available_books/001_create_view_available_books.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false

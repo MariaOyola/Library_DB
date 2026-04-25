@@ -1,0 +1,1 @@
+DROP VIEW IF EXISTS library.vw_loan_history;

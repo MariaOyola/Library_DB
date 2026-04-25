@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: f3a1b2c4-0008-4e5f-a678-trigger0001ab
+      author: mariaj_rodriguez32@soy.sena.edu.co
+      labels: "ddl,trigger,book,loan"
+      comment: Creates trigger that automatically updates book availability on loan insert or return.
+      changes:
+        - sqlFile:
+            path: 001_create_trigger_update_book_availability.sql
+            relativeToChangelogFile: true
+            stripComments: false
+            splitStatements: false
+      rollback:
+        - sqlFile:
+            path: ../../../../../05_rollbacks/01_ddl/08_triggers/1_update_book_availability/001_create_trigger_update_book_availability.rollback.sql
+            relativeToChangelogFile: true
+            stripComments: false
+            splitStatements: false

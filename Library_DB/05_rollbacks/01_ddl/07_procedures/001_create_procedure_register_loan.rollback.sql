@@ -1,0 +1,1 @@
+DROP PROCEDURE IF EXISTS library.sp_register_loan(UUID, UUID, UUID, VARCHAR);
