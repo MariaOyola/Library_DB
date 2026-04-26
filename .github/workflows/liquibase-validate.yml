@@ -1,25 +1,37 @@
+# ============================================================
+# WORKFLOW: Validar Liquibase
+# Qué hace: Cada vez que se hace push o pull request a main,
+# corre "liquibase validate" y "liquibase update".
+# Si falla → el merge queda bloqueado automáticamente.
+# ============================================================
+
+
 name: Liquibase Validate
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]    # Se ejecuta cuando haces push a main
   pull_request:
-    branches: [ main ]
+    branches: [ main ]    # Se ejecuta cuando alguien intenta mergear a main
 
 jobs:
   validate:
     name: Validate Liquibase Changesets
     runs-on: ubuntu-22.04
 
+
+      # ── Base de datos temporal para probar ─────────────────
+      # GitHub levanta un PostgreSQL limpio solo para este workflow
+
     services:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: airline_ops
+          POSTGRES_DB: airline_ops  # Tu nombre de BD
           POSTGRES_USER: ${{ secrets.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
-          - 5436:5432
+          - 5436:5432       # Tu puerto 5436 → puerto interno 5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -27,15 +39,17 @@ jobs:
           --health-retries 5
 
     steps:
+
+     # 1. Descarga el código del repositorio en la máquina de GitHub
       - name: Checkout repository
         uses: actions/checkout@v4
-
+    # 2. Instala Java 21 (Liquibase lo necesita para funcionar)
       - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
+    # 3. Descarga e instala Liquibase 5.0.2 (tu versión exacta)
       - name: Install Liquibase
         run: |
           wget -q https://github.com/liquibase/liquibase/releases/download/v5.0.2/liquibase-5.0.2.tar.gz
@@ -43,23 +57,31 @@ jobs:
           tar -xzf liquibase-5.0.2.tar.gz -C /opt/liquibase
           echo "/opt/liquibase" >> $GITHUB_PATH
 
+    # 4. Descarga el driver de PostgreSQL para que Liquibase pueda conectarse
       - name: Download PostgreSQL driver
         run: |
           wget -q https://jdbc.postgresql.org/download/postgresql-42.7.3.jar \
           -O /opt/liquibase/lib/postgresql.jar
 
+      # 5. Crea el liquibase.properties usando los Secrets que configuraste
+      #    Nunca escribimos las credenciales directamente aquí
       - name: Create liquibase.properties
         run: |
           cat > liquibase.properties << PROPS
-          changeLogFile=changelog-master.yaml
+          changeLogFile=Library_DB/changelog-master.yaml
           url=${{ secrets.DB_URL }}
           username=${{ secrets.DB_USERNAME }}
           password=${{ secrets.DB_PASSWORD }}
           driver=org.postgresql.Driver
           PROPS
 
+      # 6. Valida que todos los changesets estén bien formados
+      #    Si hay un error de sintaxis o de estructura → falla aquí
       - name: Run Liquibase Validate
         run: liquibase validate
 
+      # 7. Aplica todos los changesets en la BD temporal
+      #   Si algún changeset falla al ejecutarse → falla aquí
+      #    Este es el paso más importante — simula un update real
       - name: Run Liquibase Update
         run: liquibase update
